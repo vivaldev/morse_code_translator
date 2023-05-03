@@ -25,7 +25,7 @@
 }
 
 .container {
-  width: 30%;
+  width: 50%;
   height: 50%;
 
   display: flex;
@@ -45,4 +45,22 @@
 /* morse-abc */
 
 .morse-abc {
+  display: flex;
+
+  border: 1px solid white;
+}
+
+.morse-row {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+  margin: 0.5em;
+
+  border: 2px solid white;
+  padding: 0.5em;
+}
+
+.morse {
+  display: flex;
 }
