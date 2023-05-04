@@ -84,8 +84,11 @@
 
   border: 3px solid whitesmoke;
 
-  width: 2em;
   height: 2em;
 
   font-size: 2rem;
+}
+
+.codeword-display {
+  display: flex;
 }

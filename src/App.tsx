@@ -34,8 +34,14 @@ const App: React.FC<AppTypes> = () => {
       setCodeWord((word) => {
         return [...word, "."];
       });
-
       setSignalMark(".");
+
+      // keep this gap
+    } else if (signalLength === true && hasStarted) {
+      setCodeWord((word) => {
+        return [...word, "-"];
+      });
+      setSignalMark("-");
     }
   };
 
@@ -51,7 +57,9 @@ const App: React.FC<AppTypes> = () => {
           handleStartClick={handleStartClick}
           hasStarted={hasStarted}
         />
-        <ResultDisplay signalMark={signalMark} />
+        {hasStarted && (
+          <ResultDisplay codeWord={codeWord} hasStarted={hasStarted} />
+        )}
       </div>
     </div>
   );

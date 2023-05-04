@@ -1,14 +1,21 @@
 import React from "react";
 
 interface ResultProps {
-  signalMark: string;
+  codeWord: string[];
+  hasStarted: boolean;
 }
 
-const ResultDisplay: React.FC<ResultProps> = ({ signalMark }) => {
+const ResultDisplay: React.FC<ResultProps> = ({ codeWord }) => {
   return (
-    <div className="result-display-container">
-      <div className="current-signal">{signalMark}</div>
-    </div>
+    <>
+      <div className="result-display-container">
+        <div className="codeword-display">
+          {codeWord.map((sign, index) => (
+            <div key={index}>{sign}</div>
+          ))}
+        </div>
+      </div>
+    </>
   );
 };
 
