@@ -13,22 +13,17 @@ interface AppTypes {
 }
 
 const App: React.FC<AppTypes> = () => {
-  const [shortClicked, setShortClicked] = useState<boolean>(true);
-  const [longClicked, setLongClicked] = useState<boolean>(false);
+  const [longSignal, setLongSignal] = useState(false);
   const [pause, setPause] = useState<string>("|");
   const [codeWord, setCodeWord] = useState<string[]>([]);
 
   const morseClick = () => {
-    if (shortClicked === true) {
-      const shortSignal = setTimeout(() => {
-        console.log("Short signal (signal < 1s)");
-        setCodeWord((signal) => {
-          return [...signal, "."];
-        });
-      }, 1000);
-    }
+    const morseTimeout = setTimeout(() => {
+      setLongSignal((prevValue) => !prevValue);
+    }, 1000);
   };
 
+  console.log(`Long signal: ${longSignal}`);
   console.log(`Codeword is: ${codeWord}`);
   return (
     <div className="App">
