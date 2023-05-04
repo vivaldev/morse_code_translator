@@ -1,36 +1,57 @@
 import React, { useState } from "react";
 import "./App.css";
-import { morses } from "./morse";
 
 import Header from "./components/Header";
 import MorseAbc from "./components/MorseAbc";
 import MorseBtn from "./components/MorseBtn";
+import ResultDisplay from "./components/ResultDisplay";
 
 interface AppTypes {
-  empty: number;
-  short: number;
-  long: number;
+  signalLength: boolean;
+  signalMark: string;
+  codeWord: string[];
+  hasStarted: boolean;
 }
 
 const App: React.FC<AppTypes> = () => {
-  const [longSignal, setLongSignal] = useState(false);
-  const [pause, setPause] = useState<string>("|");
-  const [codeWord, setCodeWord] = useState<string[]>([]);
+  const [signalLength, setSignalLength] = useState(false);
+  const [signalMark, setSignalMark] = useState("");
+  const [codeWord, setCodeWord] = useState([""]);
+  const [hasStarted, setHasStarted] = useState(false);
 
-  const morseClick = () => {
-    const morseTimeout = setTimeout(() => {
-      setLongSignal((prevValue) => !prevValue);
-    }, 1000);
+  const handleStartClick = () => {
+    return setHasStarted(true);
   };
 
-  console.log(`Long signal: ${longSignal}`);
+  const morseClick = () => {
+    setHasStarted(true);
+
+    const morseTimeout = setTimeout(() => {
+      setSignalLength((prevValue) => !prevValue);
+    }, 1000);
+
+    if (signalLength === false && hasStarted) {
+      setCodeWord((word) => {
+        return [...word, "."];
+      });
+
+      setSignalMark(".");
+    }
+  };
+
+  console.log(`Signal over 1s?: ${signalLength}`);
   console.log(`Codeword is: ${codeWord}`);
   return (
     <div className="App">
       <div className="container">
         <Header />
         <MorseAbc />
-        <MorseBtn morseClick={morseClick} />
+        <MorseBtn
+          morseClick={morseClick}
+          handleStartClick={handleStartClick}
+          hasStarted={hasStarted}
+        />
+        <ResultDisplay signalMark={signalMark} />
       </div>
     </div>
   );

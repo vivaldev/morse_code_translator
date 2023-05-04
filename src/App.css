@@ -68,9 +68,24 @@
 
 /* morse-btn */
 
-.morse-btn {
+.btn {
   font-size: 1.5rem;
   font-weight: 600;
 
   padding: 0.2em 0.5em;
+}
+
+/* result display */
+
+.result-display-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 3px solid whitesmoke;
+
+  width: 2em;
+  height: 2em;
+
+  font-size: 2rem;
 }
