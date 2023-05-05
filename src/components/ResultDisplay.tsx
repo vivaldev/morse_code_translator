@@ -11,14 +11,14 @@ const ResultDisplay: React.FC<ResultProps> = ({
 
   hasStarted,
 }) => {
+  const currentSigns = codeWord.map((sign, index) => (
+    <div key={index}>{hasStarted ? sign : " "}</div>
+  ));
+
   return (
     <>
       <div className="result-display-container">
-        <div className="codeword-display">
-          {codeWord.map((sign, index) => (
-            <div key={index}>{hasStarted ? sign : " "}</div>
-          ))}
-        </div>
+        <div className="codeword-display">{currentSigns}</div>
       </div>
     </>
   );

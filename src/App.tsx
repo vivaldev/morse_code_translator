@@ -13,10 +13,9 @@ interface AppTypes {
   hasStarted: boolean;
   mouseDownTime: number;
   pauseTimerId: NodeJS.Timeout | undefined;
-  morses: { letter: string; code: string };
 }
 
-const App: React.FC<AppTypes> = ({ morses }) => {
+const App: React.FC<AppTypes> = () => {
   const [shortSignal, setShortSignal] = useState(false);
   const [longSignal, setLongSignal] = useState(false);
   const [codeWord, setCodeWord] = useState([""]);
@@ -24,13 +23,12 @@ const App: React.FC<AppTypes> = ({ morses }) => {
   const [mouseDownTime, setMouseDownTime] = useState(0);
   const [pauseTimerId, setPauseTimerId] = useState(undefined);
 
-  const morsesArray = morses.map((morse) => ({
-    letter: morse.letter,
-    code: morse.code.split(""),
-  }));
-
   const checkMorseCodeMatch = () => {
-    console.log("PAUSE");
+    const result = codeWord.join("");
+    console.log(`result: ${result}`);
+
+    const matchedMorse = morses.find((morse) => morse.code === result);
+    console.log(`matched: ${matchedMorse.letter}`);
   };
 
   const handleMouseDown = () => {
@@ -39,7 +37,6 @@ const App: React.FC<AppTypes> = ({ morses }) => {
   };
 
   const handleMouseUp = () => {
-    clearTimeout(pauseTimerId);
     const timestamp = performance.now();
     const timeDifference = timestamp - mouseDownTime;
 
@@ -51,13 +48,8 @@ const App: React.FC<AppTypes> = ({ morses }) => {
     }
   };
 
-  // Clear any existing pause timer and set a new onMouseDown
-  clearTimeout(pauseTimerId);
-  const newPauseTimerId = setTimeout(() => {
-    checkMorseCodeMatch();
-  }, 2000);
-
   const handleStartClick = () => {
+    clearTimeout(pauseTimerId);
     return setHasStarted(true);
   };
 
@@ -71,6 +63,7 @@ const App: React.FC<AppTypes> = ({ morses }) => {
           handleMouseDown={handleMouseDown}
           handleMouseUp={handleMouseUp}
           hasStarted={hasStarted}
+          checkMorseCodeMatch={checkMorseCodeMatch}
         />
         {hasStarted && (
           <ResultDisplay codeWord={codeWord} hasStarted={hasStarted} />
