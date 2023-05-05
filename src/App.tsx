@@ -7,28 +7,38 @@ import MorseBtn from "./components/MorseBtn";
 import ResultDisplay from "./components/ResultDisplay";
 
 interface AppTypes {
-  oneSecond: boolean;
-  currentWord: string;
+  longsignal: boolean;
   codeWord: string[];
   hasStarted: boolean;
   timeoutId: NodeJS.Timeout | null;
+  mouseDownTime: number;
 }
 
 const App: React.FC<AppTypes> = () => {
   const [longSignal, setLongSignal] = useState(false);
-  const [currentSign, setCurrentSign] = useState(" ");
-
   const [codeWord, setCodeWord] = useState([""]);
   const [hasStarted, setHasStarted] = useState(false);
+  const [mouseDownTime, setMouseDownTime] = useState(0);
 
   const timeoutId = useRef(null);
 
   const handleMouseDown = () => {
-    console.log("mouse down");
+    const timestamp = performance.now();
+    setMouseDownTime(timestamp);
+    // console.log(`mouse down: ${timestamp}`);
   };
 
   const handleMouseUp = () => {
-    console.log("mouse up");
+    const timestamp = performance.now();
+    const timeDifference = timestamp - mouseDownTime;
+    // console.log(`mouse up: ${timestamp}`);
+    console.log(`time difference: ${timeDifference}`);
+
+    if (timeDifference > 200) {
+      console.log("long");
+    } else {
+      console.log("short");
+    }
   };
 
   const handleStartClick = () => {
@@ -47,11 +57,7 @@ const App: React.FC<AppTypes> = () => {
           hasStarted={hasStarted}
         />
         {hasStarted && (
-          <ResultDisplay
-            codeWord={codeWord}
-            hasStarted={hasStarted}
-            currentSign={currentSign}
-          />
+          <ResultDisplay codeWord={codeWord} hasStarted={hasStarted} />
         )}
       </div>
     </div>

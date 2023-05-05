@@ -2,13 +2,13 @@ import React from "react";
 
 interface ResultProps {
   codeWord: string[];
-  currentSign: string;
+
   hasStarted: boolean;
 }
 
 const ResultDisplay: React.FC<ResultProps> = ({
   codeWord,
-  currentSign,
+
   hasStarted,
 }) => {
   return (
