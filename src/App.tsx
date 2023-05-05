@@ -16,19 +16,22 @@ interface AppTypes {
 }
 
 const App: React.FC<AppTypes> = () => {
-  const [shortSignal, setShortSignal] = useState(false);
-  const [longSignal, setLongSignal] = useState(false);
   const [codeWord, setCodeWord] = useState([""]);
   const [hasStarted, setHasStarted] = useState(false);
   const [mouseDownTime, setMouseDownTime] = useState(0);
   const [pauseTimerId, setPauseTimerId] = useState(undefined);
+  const [translationArray, setTranslationArray] = useState([""]);
 
   const checkMorseCodeMatch = () => {
     const result = codeWord.join("");
     console.log(`result: ${result}`);
 
     const matchedMorse = morses.find((morse) => morse.code === result);
-    console.log(`matched: ${matchedMorse.letter}`);
+
+    if (matchedMorse) {
+      setTranslationArray((prevValue) => [...prevValue, matchedMorse.letter]);
+      setCodeWord([""]);
+    }
   };
 
   const handleMouseDown = () => {
@@ -66,7 +69,11 @@ const App: React.FC<AppTypes> = () => {
           checkMorseCodeMatch={checkMorseCodeMatch}
         />
         {hasStarted && (
-          <ResultDisplay codeWord={codeWord} hasStarted={hasStarted} />
+          <ResultDisplay
+            codeWord={codeWord}
+            hasStarted={hasStarted}
+            translationArray={translationArray}
+          />
         )}
       </div>
     </div>
