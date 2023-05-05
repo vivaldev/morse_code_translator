@@ -84,6 +84,7 @@
 
   border: 3px solid whitesmoke;
 
+  min-width: 2em;
   height: 2em;
 
   font-size: 2rem;

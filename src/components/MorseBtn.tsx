@@ -12,12 +12,22 @@ const StartClick: React.FC<{
   );
 };
 
-const MorseClick: React.FC<{
-  morseClick: React.MouseEventHandler<HTMLButtonElement>;
-}> = ({ morseClick }) => {
+interface MorseClickProps {
+  handleMouseDown: React.MouseEventHandler<HTMLButtonElement>;
+  handleMouseUp: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+const MorseClick: React.FC<MorseClickProps> = ({
+  handleMouseDown,
+  handleMouseUp,
+}) => {
   return (
     <>
-      <button onClick={morseClick} className="btn">
+      <button
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        className="btn"
+      >
         Click
       </button>
     </>
@@ -25,14 +35,14 @@ const MorseClick: React.FC<{
 };
 
 const MorseBtn: React.FC<{
-  morseClick: React.MouseEventHandler<HTMLButtonElement>;
   handleStartClick: React.MouseEventHandler<HTMLButtonElement>;
+  handleMorseCode: React.MouseEventHandler<HTMLButtonElement>;
   hasStarted: boolean;
-}> = ({ morseClick, handleStartClick, hasStarted }) => {
+}> = ({ hasStarted, handleStartClick, handleMorseCode }) => {
   return (
     <div className="morse-btn-container">
       {hasStarted ? (
-        <MorseClick morseClick={morseClick} />
+        <MorseClick morseClick={handleMorseCode} />
       ) : (
         <StartClick handleStartClick={handleStartClick} />
       )}

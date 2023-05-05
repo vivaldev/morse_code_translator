@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./App.css";
 
 import Header from "./components/Header";
@@ -7,58 +7,51 @@ import MorseBtn from "./components/MorseBtn";
 import ResultDisplay from "./components/ResultDisplay";
 
 interface AppTypes {
-  signalLength: boolean;
-  signalMark: string;
+  oneSecond: boolean;
+  currentWord: string;
   codeWord: string[];
   hasStarted: boolean;
+  timeoutId: NodeJS.Timeout | null;
 }
 
 const App: React.FC<AppTypes> = () => {
-  const [signalLength, setSignalLength] = useState(false);
-  const [signalMark, setSignalMark] = useState("");
+  const [longSignal, setLongSignal] = useState(false);
+  const [currentSign, setCurrentSign] = useState(" ");
+
   const [codeWord, setCodeWord] = useState([""]);
   const [hasStarted, setHasStarted] = useState(false);
+
+  const timeoutId = useRef(null);
+
+  const handleMouseDown = () => {
+    console.log("mouse down");
+  };
+
+  const handleMouseUp = () => {
+    console.log("mouse up");
+  };
 
   const handleStartClick = () => {
     return setHasStarted(true);
   };
 
-  const morseClick = () => {
-    setHasStarted(true);
-
-    const morseTimeout = setTimeout(() => {
-      setSignalLength((prevValue) => !prevValue);
-    }, 1000);
-
-    if (signalLength === false && hasStarted) {
-      setCodeWord((word) => {
-        return [...word, "."];
-      });
-      setSignalMark(".");
-
-      // keep this gap
-    } else if (signalLength === true && hasStarted) {
-      setCodeWord((word) => {
-        return [...word, "-"];
-      });
-      setSignalMark("-");
-    }
-  };
-
-  console.log(`Signal over 1s?: ${signalLength}`);
-  console.log(`Codeword is: ${codeWord}`);
   return (
     <div className="App">
       <div className="container">
         <Header />
         <MorseAbc />
         <MorseBtn
-          morseClick={morseClick}
           handleStartClick={handleStartClick}
+          handleMouseDown={handleMouseDown}
+          handleMouseUp={handleMouseUp}
           hasStarted={hasStarted}
         />
         {hasStarted && (
-          <ResultDisplay codeWord={codeWord} hasStarted={hasStarted} />
+          <ResultDisplay
+            codeWord={codeWord}
+            hasStarted={hasStarted}
+            currentSign={currentSign}
+          />
         )}
       </div>
     </div>
