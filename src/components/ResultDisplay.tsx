@@ -3,17 +3,17 @@ import React from "react";
 interface ResultProps {
   codeWord: string[];
   translationArray: string[] | undefined;
-  hasStarted: boolean;
 }
 
 const ResultDisplay: React.FC<ResultProps> = ({
   codeWord,
   translationArray,
-  hasStarted,
 }) => {
   const currentSigns = codeWord.map((sign, index) => (
-    <div key={index}>{hasStarted ? sign : " "}</div>
+    <span key={index}>{sign}</span>
   ));
+
+  const translatedText = translationArray.join("");
 
   return (
     <div className="results">
@@ -21,7 +21,7 @@ const ResultDisplay: React.FC<ResultProps> = ({
         <div className="codeword-display">{currentSigns}</div>
       </div>
       <div className="result-display-container2">
-        <div className="result-display">{translationArray}</div>
+        <div className="result-display">{translatedText}</div>
       </div>
     </div>
   );

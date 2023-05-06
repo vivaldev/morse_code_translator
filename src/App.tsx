@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 
 import Header from "./components/Header";
@@ -7,29 +7,21 @@ import MorseBtn from "./components/MorseBtn";
 import ResultDisplay from "./components/ResultDisplay";
 import { morses } from "./data";
 
-interface AppTypes {
-  longsignal: boolean;
-  codeWord: string[];
-  hasStarted: boolean;
-  mouseDownTime: number;
-  pauseTimerId: NodeJS.Timeout | undefined;
-}
-
-const App: React.FC<AppTypes> = () => {
-  const [codeWord, setCodeWord] = useState([""]);
+const App: React.FC = () => {
+  const [codeWord, setCodeWord] = useState<string[]>([""]);
   const [hasStarted, setHasStarted] = useState(false);
   const [mouseDownTime, setMouseDownTime] = useState(0);
-  const [pauseTimerId, setPauseTimerId] = useState(undefined);
-  const [translationArray, setTranslationArray] = useState([""]);
+  const [translationArray, setTranslationArray] = useState<string[]>([""]);
 
   const checkMorseCodeMatch = () => {
     const result = codeWord.join("");
-    console.log(`result: ${result}`);
 
     const matchedMorse = morses.find((morse) => morse.code === result);
 
     if (matchedMorse) {
       setTranslationArray((prevValue) => [...prevValue, matchedMorse.letter]);
+      setCodeWord([""]);
+    } else {
       setCodeWord([""]);
     }
   };
@@ -52,8 +44,11 @@ const App: React.FC<AppTypes> = () => {
   };
 
   const handleStartClick = () => {
-    clearTimeout(pauseTimerId);
     return setHasStarted(true);
+  };
+
+  const handleResetCodeWord = () => {
+    setCodeWord([]);
   };
 
   return (
@@ -67,11 +62,11 @@ const App: React.FC<AppTypes> = () => {
           handleMouseUp={handleMouseUp}
           hasStarted={hasStarted}
           checkMorseCodeMatch={checkMorseCodeMatch}
+          handleResetCodeWord={handleResetCodeWord}
         />
         {hasStarted && (
           <ResultDisplay
             codeWord={codeWord}
-            hasStarted={hasStarted}
             translationArray={translationArray}
           />
         )}
