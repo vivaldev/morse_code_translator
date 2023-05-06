@@ -24,7 +24,6 @@ interface MorseClickProps {
   handleMouseDown: React.MouseEventHandler<HTMLButtonElement>;
   handleMouseUp: React.MouseEventHandler<HTMLButtonElement>;
   checkMorseCodeMatch: React.MouseEventHandler<HTMLButtonElement>;
-  handleResetCodeWord: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const MorseClick: React.FC<MorseClickProps> = ({
