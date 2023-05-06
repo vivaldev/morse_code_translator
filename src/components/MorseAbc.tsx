@@ -1,16 +1,26 @@
-import React, { useState } from "react";
 import { morses } from "../data";
 
 const MorseAbc: React.FC = () => {
+  // FUNCTION TO RENDER MORSE CODE DATA:
+  // Create a new function 'renderMorseRow' and give it parameters
+  // 'start' and 'end' that are typed as a number.
   const renderMorseRow = (start: number, end: number) => {
+    // Return data from 'morses' array from "./data.js".
+    // Use .slice()-method and pass it parameters 'start' and 'end'.
+    // Use .map()-method to iterate over the array of objects 'morses'
     return morses.slice(start, end).map((morse) => (
+      // JSX to be returned, using 'morse.letter' as their key-value.
       <div className="morse-row" key={morse.letter}>
+        {/* Display 'morse.letter' (alphabetical letter) */}
         <div className="morse-letter">{morse.letter}</div>
+        {/* Display 'morse.code' (morse code symbols) */}
         <div className="morse-code">{morse.code}</div>
       </div>
     ));
   };
 
+  // Use 'renderMorseRow(start, end)' function to display rows as you want.
+  // 'start' and 'end' can be inserted with arguments wanted
   return (
     <div className="morse-abc">
       <div className="super-row">
