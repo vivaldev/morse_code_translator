@@ -27,7 +27,13 @@ const MorseAbc: React.FC = () => {
           <div className="morse">{renderMorseRow(14, 21)}</div>
         </div>
         <div className="morse-row">
-          <div className="morse">{renderMorseRow(21, 28)}</div>
+          <div className="morse">{renderMorseRow(21, 26)}</div>
+        </div>
+      </div>
+
+      <div className="super-row">
+        <div className="morse-row numbers-row">
+          <div className="morse">{renderMorseRow(26, 40)}</div>
         </div>
       </div>
     </div>
