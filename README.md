@@ -15,7 +15,7 @@ The app includes instructions, which are shown on the first page. All the rules 
 2. Clone the repository by typing:
 
     ```bash
-    git clone https://github.com/vivaldev/morse-code-translator.git
+    gh repo clone vivaldev/morse_code_translator
     ```
 
     or download the project as a zip file and extract it to the desired directory.
