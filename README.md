@@ -20,11 +20,20 @@ The app includes instructions, which are shown on the first page. All the rules 
 
     or download the project as a zip file and extract it to the desired directory.
 
-3. Mo
+3. Move to the project directory:
 
-```bash
+    ```bash
     cd morse-code-translator
     ```
-4. ```bash
+
+4. Install the dependencies:
+
+    ```bash
     npm install
+    ```
+
+5. Run the app:
+
+    ```bash
+    npm run dev
     ```
