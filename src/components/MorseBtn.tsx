@@ -31,7 +31,7 @@ const MorseClick: React.FC<MorseClickProps> = ({
         </button>
       </div>
 
-      <button onClick={checkMorseCodeMatch} className="btn secondar">
+      <button onClick={checkMorseCodeMatch} className="btn secondary">
         Submit
       </button>
     </div>
