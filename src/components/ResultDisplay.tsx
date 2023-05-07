@@ -2,12 +2,12 @@ import React from "react";
 
 interface ResultProps {
   codeWord: string[];
-  translationArray: string[] | undefined;
+  translationArray?: string[];
 }
 
 const ResultDisplay: React.FC<ResultProps> = ({
   codeWord,
-  translationArray,
+  translationArray = [],
 }) => {
   const currentSigns = codeWord.map((sign, index) => (
     <span key={index}>{sign}</span>

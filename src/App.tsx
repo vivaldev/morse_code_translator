@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./App.css";
 
 import Header from "./components/Header";
+import Instructions from "./components/Instructions";
+import StartButton from "./components/StartButton";
 import MorseAbc from "./components/MorseAbc";
 import MorseBtn from "./components/MorseBtn";
 import ResultDisplay from "./components/ResultDisplay";
@@ -9,8 +11,8 @@ import { morses } from "./data";
 
 const App: React.FC = () => {
   const [codeWord, setCodeWord] = useState<string[]>([""]);
-  const [hasStarted, setHasStarted] = useState(false);
-  const [mouseDownTime, setMouseDownTime] = useState(0);
+  const [hasStarted, setHasStarted] = useState<boolean>(false);
+  const [mouseDownTime, setMouseDownTime] = useState<number>(0);
   const [translationArray, setTranslationArray] = useState<string[]>([""]);
 
   // START THE APP:
@@ -32,27 +34,18 @@ const App: React.FC = () => {
 
   // CLICK ENDS
   const handleMouseUp = () => {
-    // Take timestamp as in click down
+    // Take timestamp in a same way than in click down
     const timestamp = performance.now();
     // Use the data initialized in 'mouseDownTime' state to tell
     // the difference between click down and click up (=click time).
     const timeDifference = timestamp - mouseDownTime;
 
-    // SHORT CLICK SIGNAL
-    // If click is less than 200 millisecons or 0.2 seconds.
-    if (timeDifference < 200) {
-      // Initialize 'codeWord' state by taking a shallow copy
-      // from old array and update that with short signal symbol, "."
-      setCodeWord((word) => [...word, "."]);
-    }
-
-    // LONG CLICK SIGNAL
-    // If click is more or exactly 200 milliseconds or 0.2 secods.
-    if (timeDifference >= 200) {
-      // Initialize by using same logic as in 'short click',
-      // but use long signal, "-"
-      setCodeWord((word) => [...word, "-"]);
-    }
+    // SHORT OR LONG SIGNAL:
+    // Initialize a new variable 'signal' with the right signal mark.
+    // Use 'timeDifference' to check if user holds click down over 0.2s
+    const signal = timeDifference < 200 ? "." : "-";
+    // Update the 'codeWord' array of strings with appropriate signal
+    setCodeWord((word) => [...word, signal]);
   };
 
   // CHECK IF MATCH ANY MORSE CODE SYMBOL WHEN SUBMIT:
@@ -68,17 +61,15 @@ const App: React.FC = () => {
 
     // Check if the 'matchedMorse is truthy (.find() result is not empty)
     if (matchedMorse) {
-      // If so, initialize 'translationArray' by taking a shallow copy of it
-      // and updating that 'prevTranslationArray' with matchinging code symbol
-      // alphabetical letter (e.g. "E").
-      setTranslationArray((prevTranslationArray) => [
-        ...prevTranslationArray,
-        matchedMorse.letter,
-      ]);
-      // Initialize 'codeWord' array with an empty array of strings to set it start.
-      setCodeWord([""]);
+      // If so, update 'translationArray' with a new alphabetical letter
+      setTranslationArray((prevArray) => [...prevArray, matchedMorse.letter]);
+      // Use 'translationArray' to display the array in <ResultDisplay />
+    }
 
-      // If 'matchedMorse' variable is not truthy (.find() result is empty, mis-match)
+    // Edge case: If 'codeWord' array is empty when executed
+    if (codeWord.length === 1 && codeWord[0] === "") {
+      // Return early, preventing further checks and updates
+      return;
     } else {
       // Only initialize 'codeWord' array with an empty array of strings to set it start.
       // This makes it possible to reset current choice of morse code symbols with "Submit"-btn.
@@ -88,21 +79,31 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <div className="container">
+      <div className="container start">
         <Header />
-        <MorseAbc />
-        <MorseBtn
-          handleStartClick={handleStartClick}
-          handleMouseDown={handleMouseDown}
-          handleMouseUp={handleMouseUp}
-          hasStarted={hasStarted}
-          checkMorseCodeMatch={checkMorseCodeMatch}
-        />
+
+        {!hasStarted && (
+          <>
+            <Instructions />
+            <StartButton handleStartClick={handleStartClick} />
+          </>
+        )}
+
         {hasStarted && (
-          <ResultDisplay
-            codeWord={codeWord}
-            translationArray={translationArray}
-          />
+          <>
+            <MorseAbc />
+            <MorseBtn
+              hasStarted={hasStarted}
+              handleStartClick={handleStartClick}
+              handleMouseDown={handleMouseDown}
+              handleMouseUp={handleMouseUp}
+              checkMorseCodeMatch={checkMorseCodeMatch}
+            />
+            <ResultDisplay
+              codeWord={codeWord}
+              translationArray={translationArray}
+            />
+          </>
         )}
       </div>
     </div>
