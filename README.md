@@ -1,9 +1,30 @@
-# morse_code_translator
+# Morse Code Translator
 
-This is a coding exercise I've created to better understand Typescript in React enviroment and the logic in general. It is only the first project I've done and finished using ChatGPT-4 with my "senior dev", it giving me good enquidament whole through the process. This was not done to train how to work with AI-assistance, but more of mentoring experience.
+## Description
 
-Clone the repo:
-gh repo clone vivaldev/morse_code_translator 
+This is a simple Morse Code Translator app I did as an exercise. You can practice your Morse Code skills by getting familiar with it alphabet and numbers. It's created using ChatGPT-4 as my guidance in a role of mentoring "senior dev", so it's not an exercise of how to develop using AI - as I've said, this has been a learning experience for me, so all the solutions and everything are created by me.
 
-Run:
-npm run dev
+## How to use
+
+The app includes instructions, which are shown on the first page. All the rules are following international Morse Code standards.
+
+## How to run
+
+1. Open your terminal / bash / CLI and navigate to the desired directory you wish to clone the project to. 
+
+2. Clone the repository by typing:
+
+    ```bash
+    git clone https://github.com/vivaldev/morse-code-translator.git
+    ```
+
+    or download the project as a zip file and extract it to the desired directory.
+
+3. Mo
+
+```bash
+    cd morse-code-translator
+    ```
+4. ```bash
+    npm install
+    ```
