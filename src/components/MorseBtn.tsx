@@ -1,5 +1,6 @@
 import React from "react";
 
+// Define the types of props expected by the components
 interface MorseBtnProps {
   hasStarted: boolean;
   handleStartClick: React.MouseEventHandler<HTMLButtonElement>;
@@ -14,11 +15,13 @@ interface MorseClickProps {
   checkMorseCodeMatch: React.MouseEventHandler<HTMLButtonElement>;
 }
 
+// Function component for handling Morse Code clicks
 const MorseClick: React.FC<MorseClickProps> = ({
   handleMouseDown,
   handleMouseUp,
   checkMorseCodeMatch,
 }) => {
+  // Renders two buttons, one for generating Morse Code and another for submitting the Morse Code
   return (
     <div className="btn-container">
       <div>
@@ -31,6 +34,8 @@ const MorseClick: React.FC<MorseClickProps> = ({
         </button>
       </div>
 
+      <button className="btn secondary">Clear</button>
+
       <button onClick={checkMorseCodeMatch} className="btn secondary">
         Submit
       </button>
@@ -38,12 +43,14 @@ const MorseClick: React.FC<MorseClickProps> = ({
   );
 };
 
+// Parent component to conditionally render the MorseClick component
 const MorseBtn: React.FC<MorseBtnProps> = ({
   hasStarted,
   handleMouseDown,
   handleMouseUp,
   checkMorseCodeMatch,
 }) => {
+  // If hasStarted is true, render the MorseClick component
   return (
     <div className="morse-btn-container">
       {hasStarted && (
