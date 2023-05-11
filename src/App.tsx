@@ -38,9 +38,19 @@ const App: React.FC = () => {
     if (!(codeWord.length === 1 && codeWord[0] === "")) setCodeWord([""]);
   };
 
-  // Clear button logic
+  // Clear button
   const clearButton = () => {
     setCodeWord([""]);
+    console.log("clear");
+  };
+
+  // Delete button
+  const deleteLastLetter = () => {
+    setTranslationArray((prevArray) => {
+      const newArray = [...prevArray];
+      newArray.pop();
+      return newArray;
+    });
   };
 
   return (
@@ -66,6 +76,8 @@ const App: React.FC = () => {
               handleMouseDown={handleMouseDown}
               handleMouseUp={handleMouseUp}
               checkMorseCodeMatch={checkMorseCodeMatch}
+              clearButton={clearButton}
+              deleteButton={deleteLastLetter}
             />
             <ResultDisplay
               codeWord={codeWord}

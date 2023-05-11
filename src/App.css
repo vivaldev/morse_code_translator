@@ -134,6 +134,7 @@ p {
 
 .btn-container {
   display: flex;
+  flex-direction: column;
   margin-top: 1em;
 }
 
@@ -145,6 +146,10 @@ p {
   margin: 0.5em;
 
   border-radius: 5px;
+}
+
+.btn:hover {
+  cursor: pointer;
 }
 
 .primary {

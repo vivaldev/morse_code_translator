@@ -7,41 +7,9 @@ interface MorseBtnProps {
   handleMouseDown: React.MouseEventHandler<HTMLButtonElement>;
   handleMouseUp: React.MouseEventHandler<HTMLButtonElement>;
   checkMorseCodeMatch: React.MouseEventHandler<HTMLButtonElement>;
+  clearButton: React.MouseEventHandler<HTMLButtonElement>;
+  deleteButton: React.MouseEventHandler<HTMLButtonElement>;
 }
-
-interface MorseClickProps {
-  handleMouseDown: React.MouseEventHandler<HTMLButtonElement>;
-  handleMouseUp: React.MouseEventHandler<HTMLButtonElement>;
-  checkMorseCodeMatch: React.MouseEventHandler<HTMLButtonElement>;
-}
-
-// Function component for handling Morse Code clicks
-const MorseClick: React.FC<MorseClickProps> = ({
-  handleMouseDown,
-  handleMouseUp,
-  checkMorseCodeMatch,
-}) => {
-  // Renders two buttons, one for generating Morse Code and another for submitting the Morse Code
-  return (
-    <div className="btn-container">
-      <div>
-        <button
-          onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
-          className="btn primary"
-        >
-          Click
-        </button>
-      </div>
-
-      <button className="btn secondary">Clear</button>
-
-      <button onClick={checkMorseCodeMatch} className="btn secondary">
-        Submit
-      </button>
-    </div>
-  );
-};
 
 // Parent component to conditionally render the MorseClick component
 const MorseBtn: React.FC<MorseBtnProps> = ({
@@ -49,16 +17,36 @@ const MorseBtn: React.FC<MorseBtnProps> = ({
   handleMouseDown,
   handleMouseUp,
   checkMorseCodeMatch,
+  clearButton,
+  deleteButton,
 }) => {
   // If hasStarted is true, render the MorseClick component
   return (
     <div className="morse-btn-container">
       {hasStarted && (
-        <MorseClick
-          handleMouseDown={handleMouseDown}
-          handleMouseUp={handleMouseUp}
-          checkMorseCodeMatch={checkMorseCodeMatch}
-        />
+        <div className="btn-container">
+          <div>
+            <button
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              className="btn primary"
+            >
+              Click
+            </button>
+            <button onClick={deleteButton} className="btn primary">
+              Delete
+            </button>
+          </div>
+
+          <div>
+            <button onClick={checkMorseCodeMatch} className="btn secondary">
+              Submit
+            </button>
+            <button onClick={clearButton} className="btn secondary">
+              Clear
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
