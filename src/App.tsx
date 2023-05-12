@@ -11,7 +11,8 @@ import { morses } from "./data";
 
 const App: React.FC = () => {
   // State variables
-  const [codeWord, setCodeWord] = useState<string[]>([""]);
+  const [codeWord, setCodeWord] = useState<string[]>([]);
+
   const [hasStarted, setHasStarted] = useState<boolean>(false);
   const [mouseDownTime, setMouseDownTime] = useState<number>(0);
   const [translationArray, setTranslationArray] = useState<string[]>([""]);
@@ -38,20 +39,28 @@ const App: React.FC = () => {
     const timeDifference = timestamp - mouseDownTime;
     const signal = timeDifference < 200 ? "." : "-";
 
-    setCodeWord((word) => [...word, signal]);
-
-    spaceTimeoutId.current = window.setTimeout(() => {
-      console.log("space");
-    }, 600);
+    setCodeWord((word) => {
+      const newWord = [...word, signal];
+      spaceTimeoutId.current = window.setTimeout(() => {
+        console.log("space");
+        checkMorseCodeMatch(newWord);
+        setCodeWord([]);
+      }, 600);
+      return newWord;
+    });
   };
 
-  // Check if codeWord matches a morse code, if yes, update translationArray
-  const checkMorseCodeMatch = () => {
-    const result = codeWord.join("");
+  //  Check if 'codeWord' matches with existing morse code signal we get from
+  // data.If yes, update 'translationArray' with matching alphabetical letter.
+  // 'translationArray' is used to display letters.
+
+  const checkMorseCodeMatch = (word: string[]) => {
+    const result = word.join("");
     const matchedMorse = morses.find((morse) => morse.code === result);
-    if (matchedMorse)
+
+    if (matchedMorse) {
       setTranslationArray((prevArray) => [...prevArray, matchedMorse.letter]);
-    if (!(codeWord.length === 1 && codeWord[0] === "")) setCodeWord([""]);
+    }
   };
 
   // Clear button
