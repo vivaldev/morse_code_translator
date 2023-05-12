@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./App.css";
 // Importing components
 import Header from "./components/Header";
@@ -16,17 +16,33 @@ const App: React.FC = () => {
   const [mouseDownTime, setMouseDownTime] = useState<number>(0);
   const [translationArray, setTranslationArray] = useState<string[]>([""]);
 
+  const spaceTimeoutId = useRef<number | undefined>(undefined);
+
   // Start app
   const handleStartClick = () => setHasStarted(true);
 
   // Record start time on mouse down
-  const handleMouseDown = () => setMouseDownTime(performance.now());
+  const handleMouseDown = () => {
+    if (spaceTimeoutId.current) {
+      clearTimeout(spaceTimeoutId.current);
+      spaceTimeoutId.current = undefined;
+    }
+
+    const timestamp = Date.now();
+    setMouseDownTime(timestamp);
+  };
 
   // Record end time on mouse up, calculate click duration, update codeWord
   const handleMouseUp = () => {
-    const timeDifference = performance.now() - mouseDownTime;
+    const timestamp = Date.now();
+    const timeDifference = timestamp - mouseDownTime;
     const signal = timeDifference < 200 ? "." : "-";
+
     setCodeWord((word) => [...word, signal]);
+
+    spaceTimeoutId.current = window.setTimeout(() => {
+      console.log("space");
+    }, 600);
   };
 
   // Check if codeWord matches a morse code, if yes, update translationArray
